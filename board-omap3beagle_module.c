@@ -2,23 +2,28 @@
 #include <linux/spi/spi.h>
 #include "mux.h"
 
+typedef (*Functionptr()[]))(char*,char);
+
 static void __init omap3_beagle_config_mcspi3_mux(void)
 {
-        // NOTE: Clock pins need to be in input mode
-	omap_mux_init_signal("sdmmc2_clk.mcspi3_clk", OMAP_PIN_INPUT);
-	omap_mux_init_signal("sdmmc2_dat3.mcspi3_cs0", OMAP_PIN_OUTPUT);
-	omap_mux_init_signal("sdmmc2_dat2.mcspi3_cs1", OMAP_PIN_OUTPUT);
-	omap_mux_init_signal("sdmmc2_cmd.mcspi3_simo", OMAP_PIN_OUTPUT);
-	omap_mux_init_signal("sdmmc2_dat0.mcspi3_somi", OMAP_PIN_INPUT_PULLUP);
+       Functionptr = omap_mux_init_signal;
+       
+	// NOTE: Clock pins need to be in input mode
+	*Functionptr[0]("sdmmc2_clk.mcspi3_clk", OMAP_PIN_INPUT);
+	*Functionptr[1]("sdmmc2_dat3.mcspi3_cs0", OMAP_PIN_OUTPUT);
+	*Functionptr[2]("sdmmc2_dat2.mcspi3_cs1", OMAP_PIN_OUTPUT);
+	*Functionptr[3]("sdmmc2_cmd.mcspi3_simo", OMAP_PIN_OUTPUT);
+	*Functionptr[4]("sdmmc2_dat0.mcspi3_somi", OMAP_PIN_INPUT_PULLUP);	
+	
 }
 
 static void __init omap3_beagle_config_mcspi4_mux(void)
 {
         // NOTE: Clock pins need to be in input mode
-	omap_mux_init_signal("mcbsp1_clkr.mcspi4_clk", OMAP_PIN_INPUT);
-	omap_mux_init_signal("mcbsp1_fsx.mcspi4_cs0", OMAP_PIN_OUTPUT);
-	omap_mux_init_signal("mcbsp1_dx.mcspi4_simo", OMAP_PIN_OUTPUT);
-	omap_mux_init_signal("mcbsp1_dr.mcspi4_somi", OMAP_PIN_INPUT_PULLUP);
+	*Functionptr[0]("mcbsp1_clkr.mcspi4_clk", OMAP_PIN_INPUT);
+	*Functionptr[1]("mcbsp1_fsx.mcspi4_cs0", OMAP_PIN_OUTPUT);
+	*Functionptr[2]("mcbsp1_dx.mcspi4_simo", OMAP_PIN_OUTPUT);
+	*Functionptr[3]("mcbsp1_dr.mcspi4_somi", OMAP_PIN_INPUT_PULLUP);
 }
 
 static struct spi_board_info beagle_mcspi_board_info[] = {
